@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.just.agentweb.MiddlewareWebClientBase;
+import com.just.agentweb.wrapper.MiddlewareWebClientBase;
 import com.just.agentweb.sample.sonic.SonicImpl;
 import com.just.agentweb.sample.sonic.SonicJavaScriptInterface;
 

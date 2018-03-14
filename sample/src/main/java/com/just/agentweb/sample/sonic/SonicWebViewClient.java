@@ -5,7 +5,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
-import com.just.agentweb.MiddlewareWebClientBase;
+import com.just.agentweb.wrapper.MiddlewareWebClientBase;
 import com.tencent.sonic.sdk.SonicSession;
 
 /**

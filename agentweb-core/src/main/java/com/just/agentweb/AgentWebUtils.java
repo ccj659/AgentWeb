@@ -36,22 +36,16 @@ import android.os.Looper;
 import android.os.StatFs;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
 import android.support.v4.os.EnvironmentCompat;
 import android.telephony.TelephonyManager;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.ValueCallback;
@@ -60,6 +54,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.just.agentweb.security.PermissionInterceptor;
+import com.just.agentweb.view.webparent.WebParentLayout;
+import com.just.agentweb.web.AbsAgentWebUIController;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +65,6 @@ import org.json.JSONObject;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -104,7 +101,7 @@ public class AgentWebUtils {
 	}
 
 
-	static final void clearWebView(WebView m) {
+	public static final void clearWebView(WebView m) {
 
 		if (m == null) {
 			return;
@@ -334,37 +331,9 @@ public class AgentWebUtils {
 	}
 
 
-	private static WeakReference<Snackbar> snackbarWeakReference;
 
-	static void show(View parent,
-	                 CharSequence text,
-	                 int duration,
-	                 @ColorInt int textColor,
-	                 @ColorInt int bgColor,
-	                 CharSequence actionText,
-	                 @ColorInt int actionTextColor,
-	                 View.OnClickListener listener) {
-		SpannableString spannableString = new SpannableString(text);
-		ForegroundColorSpan colorSpan = new ForegroundColorSpan(textColor);
-		spannableString.setSpan(colorSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		snackbarWeakReference = new WeakReference<>(Snackbar.make(parent, spannableString, duration));
-		Snackbar snackbar = snackbarWeakReference.get();
-		View view = snackbar.getView();
-		view.setBackgroundColor(bgColor);
-		if (actionText != null && actionText.length() > 0 && listener != null) {
-			snackbar.setActionTextColor(actionTextColor);
-			snackbar.setAction(actionText, listener);
-		}
-		snackbar.show();
 
-	}
 
-	static void dismiss() {
-		if (snackbarWeakReference != null && snackbarWeakReference.get() != null) {
-			snackbarWeakReference.get().dismiss();
-			snackbarWeakReference = null;
-		}
-	}
 
 	public static boolean checkWifi(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -384,7 +353,7 @@ public class AgentWebUtils {
 		return info != null && info.isConnected();
 	}
 
-	static boolean isOverriedMethod(Object currentObject, String methodName, String method, Class... clazzs) {
+	public static boolean isOverriedMethod(Object currentObject, String methodName, String method, Class... clazzs) {
 		LogUtils.i(TAG, "  methodName:" + methodName + "   method:" + method);
 		boolean tag = false;
 		if (currentObject == null) {
@@ -405,7 +374,7 @@ public class AgentWebUtils {
 		return tag;
 	}
 
-	static Method isExistMethod(Object o, String methodName, Class... clazzs) {
+	public static Method isExistMethod(Object o, String methodName, Class... clazzs) {
 
 		if (null == o) {
 			return null;
@@ -424,7 +393,7 @@ public class AgentWebUtils {
 
 	}
 
-	static void clearAgentWebCache(Context context) {
+	public static void clearAgentWebCache(Context context) {
 		try {
 			clearCacheFolder(new File(getAgentWebFilePath(context)), 0);
 		} catch (Throwable throwable) {
@@ -434,7 +403,7 @@ public class AgentWebUtils {
 		}
 	}
 
-	static void clearWebViewAllCache(Context context, WebView webView) {
+	public static void clearWebViewAllCache(Context context, WebView webView) {
 
 		try {
 
@@ -456,7 +425,7 @@ public class AgentWebUtils {
 	}
 
 
-	static void clearWebViewAllCache(Context context) {
+	public static void clearWebViewAllCache(Context context) {
 
 		try {
 
@@ -466,7 +435,7 @@ public class AgentWebUtils {
 		}
 	}
 
-	static int clearCacheFolder(final File dir, final int numDays) {
+	public	static int clearCacheFolder(final File dir, final int numDays) {
 
 		int deletedFiles = 0;
 		if (dir != null) {
@@ -549,7 +518,7 @@ public class AgentWebUtils {
 	}
 
 
-	static File createImageFile(Context context) {
+	public static File createImageFile(Context context) {
 		File mFile = null;
 		try {
 
@@ -579,7 +548,7 @@ public class AgentWebUtils {
 
 
 	@TargetApi(19)
-	static String getFileAbsolutePath(Activity context, Uri fileUri) {
+	public	static String getFileAbsolutePath(Activity context, Uri fileUri) {
 
 		if (context == null || fileUri == null) {
 			return null;
@@ -637,7 +606,7 @@ public class AgentWebUtils {
 		return null;
 	}
 
-	static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+	public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
 		Cursor cursor = null;
 		String[] projection = {MediaStore.Images.Media.DATA};
 		try {
@@ -658,7 +627,7 @@ public class AgentWebUtils {
 	 * @param uri The Uri to check.
 	 * @return Whether the Uri authority is ExternalStorageProvider.
 	 */
-	static boolean isExternalStorageDocument(Uri uri) {
+	public	static boolean isExternalStorageDocument(Uri uri) {
 		return "com.android.externalstorage.documents".equals(uri.getAuthority());
 	}
 
@@ -666,7 +635,7 @@ public class AgentWebUtils {
 	 * @param uri The Uri to check.
 	 * @return Whether the Uri authority is DownloadsProvider.
 	 */
-	static boolean isDownloadsDocument(Uri uri) {
+	public	static boolean isDownloadsDocument(Uri uri) {
 		return "com.android.providers.downloads.documents".equals(uri.getAuthority());
 	}
 
@@ -674,7 +643,7 @@ public class AgentWebUtils {
 	 * @param uri The Uri to check.
 	 * @return Whether the Uri authority is MediaProvider.
 	 */
-	static boolean isMediaDocument(Uri uri) {
+	public	static boolean isMediaDocument(Uri uri) {
 		return "com.android.providers.media.documents".equals(uri.getAuthority());
 	}
 
@@ -682,11 +651,11 @@ public class AgentWebUtils {
 	 * @param uri The Uri to check.
 	 * @return Whether the Uri authority is Google Photos.
 	 */
-	static boolean isGooglePhotosUri(Uri uri) {
+	public	static boolean isGooglePhotosUri(Uri uri) {
 		return "com.google.android.apps.photos.content".equals(uri.getAuthority());
 	}
 
-	static Intent getInstallApkIntentCompat(Context context, File file) {
+	public static Intent getInstallApkIntentCompat(Context context, File file) {
 
 		Intent mIntent = new Intent().setAction(Intent.ACTION_VIEW);
 		setIntentDataAndType(context, mIntent, "application/vnd.android.package-archive", file, false);
@@ -699,7 +668,7 @@ public class AgentWebUtils {
 		return mIntent;
 	}
 
-	static Intent getIntentCaptureCompat(Context context, File file) {
+	public static Intent getIntentCaptureCompat(Context context, File file) {
 		Intent mIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		Uri mUri = getUriFromFile(context, file);
 		mIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -708,7 +677,7 @@ public class AgentWebUtils {
 	}
 
 
-	static boolean isJson(String target) {
+	public static boolean isJson(String target) {
 		if (TextUtils.isEmpty(target)) {
 			return false;
 		}
@@ -735,7 +704,7 @@ public class AgentWebUtils {
 		return Looper.myLooper() == Looper.getMainLooper();
 	}
 
-	static boolean isEmptyCollection(Collection collection) {
+	public static boolean isEmptyCollection(Collection collection) {
 
 		return collection == null || collection.isEmpty();
 	}
@@ -747,7 +716,7 @@ public class AgentWebUtils {
 
 	private static Toast mToast = null;
 
-	static void toastShowShort(Context context, String msg) {
+	public static void toastShowShort(Context context, String msg) {
 
 		if (mToast == null) {
 			mToast = Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT);
@@ -868,14 +837,14 @@ public class AgentWebUtils {
 		mHandler.post(runnable);
 	}
 
-	static boolean showFileChooserCompat(Activity activity,
-	                                     WebView webView,
-	                                     ValueCallback<Uri[]> valueCallbacks,
-	                                     WebChromeClient.FileChooserParams fileChooserParams,
-	                                     PermissionInterceptor permissionInterceptor,
-	                                     ValueCallback valueCallback,
-	                                     String mimeType,
-	                                     Handler.Callback jsChannelCallback
+	public static boolean showFileChooserCompat(Activity activity,
+												WebView webView,
+												ValueCallback<Uri[]> valueCallbacks,
+												WebChromeClient.FileChooserParams fileChooserParams,
+												PermissionInterceptor permissionInterceptor,
+												ValueCallback valueCallback,
+												String mimeType,
+												Handler.Callback jsChannelCallback
 	) {
 
 

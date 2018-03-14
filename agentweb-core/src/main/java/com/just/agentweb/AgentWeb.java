@@ -32,6 +32,43 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.just.agentweb.jsbridge.AgentWebJsInterfaceCompat;
+import com.just.agentweb.jsbridge.dao.JavaCallJs;
+import com.just.agentweb.jsbridge.JsAccessEntraceImpl;
+import com.just.agentweb.jsbridge.dao.JsInterfaceHolder;
+import com.just.agentweb.jsbridge.JsInterfaceHolderImpl;
+import com.just.agentweb.security.PermissionInterceptor;
+import com.just.agentweb.security.WebSecurityCheckLogic;
+import com.just.agentweb.security.WebSecurityController;
+import com.just.agentweb.security.WebSecurityControllerImpl;
+import com.just.agentweb.security.WebSecurityLogicImpl;
+import com.just.agentweb.video.EventHandlerImpl;
+import com.just.agentweb.video.EventInterceptor;
+import com.just.agentweb.video.IEventHandler;
+import com.just.agentweb.video.IVideo;
+import com.just.agentweb.video.VideoImpl;
+import com.just.agentweb.view.indicator.BaseIndicatorView;
+import com.just.agentweb.view.indicator.IndicatorController;
+import com.just.agentweb.view.indicator.IndicatorHandler;
+import com.just.agentweb.view.webparent.IWebLayout;
+import com.just.agentweb.view.webparent.WebParentLayout;
+import com.just.agentweb.web.AbsAgentWebSettings;
+import com.just.agentweb.web.AbsAgentWebUIController;
+import com.just.agentweb.web.AgentWebUIControllerImplBase;
+import com.just.agentweb.web.DefaultAgentWebSettings;
+import com.just.agentweb.web.DefaultChromeClient;
+import com.just.agentweb.web.DefaultUrlLoader;
+import com.just.agentweb.web.DefaultWebClient;
+import com.just.agentweb.web.DefaultWebCreator;
+import com.just.agentweb.web.DefaultWebLifeCycle;
+import com.just.agentweb.web.dao.IAgentWebSettings;
+import com.just.agentweb.web.dao.IUrlLoader;
+import com.just.agentweb.web.dao.WebCreator;
+import com.just.agentweb.web.dao.WebLifeCycle;
+import com.just.agentweb.web.dao.WebListenerManager;
+import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
+import com.just.agentweb.wrapper.MiddlewareWebClientBase;
+
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
@@ -126,9 +163,9 @@ public final class AgentWeb {
 	 */
 	private AgentWebJsInterfaceCompat mAgentWebJsInterfaceCompat = null;
 	/**
-	 * JsAccessEntrace 提供快速的JS调用
+	 * JavaCallJs 提供快速的JS调用
 	 */
-	private JsAccessEntrace mJsAccessEntrace = null;
+	private JavaCallJs mJsAccessEntrace = null;
 	/**
 	 * URL Loader ， 封装了 mWebView.loadUrl(url) reload() stopLoading（） postUrl()等方法
 	 */
@@ -194,14 +231,14 @@ public final class AgentWeb {
 		}
 		this.mPermissionInterceptor = agentBuilder.mPermissionInterceptor == null ? null : new PermissionInterceptorWrapper(agentBuilder.mPermissionInterceptor);
 		this.mSecurityType = agentBuilder.mSecurityType;
-		this.mIUrlLoader = new UrlLoaderImpl(mWebCreator.create().getWebView(), agentBuilder.mHttpHeaders);
+		this.mIUrlLoader = new DefaultUrlLoader(mWebCreator.create().getWebView());
 		if (this.mWebCreator.getWebParentLayout() instanceof WebParentLayout) {
 			WebParentLayout mWebParentLayout = (WebParentLayout) this.mWebCreator.getWebParentLayout();
 			mWebParentLayout.bindController(agentBuilder.mAgentWebUIController == null ? AgentWebUIControllerImplBase.build() : agentBuilder.mAgentWebUIController);
 			mWebParentLayout.setErrorLayoutRes(agentBuilder.mErrorLayout, agentBuilder.mReloadId);
 			mWebParentLayout.setErrorView(agentBuilder.mErrorView);
 		}
-		this.mWebLifeCycle = new DefaultWebLifeCycleImpl(mWebCreator.getWebView());
+		this.mWebLifeCycle = new DefaultWebLifeCycle(mWebCreator.getWebView());
 		mWebSecurityController = new WebSecurityControllerImpl(mWebCreator.getWebView(), this.mAgentWeb.mJavaObjects, this.mSecurityType);
 		this.mWebClientHelper = agentBuilder.mWebClientHelper;
 		this.mIsInterceptUnkownUrl = agentBuilder.mIsInterceptUnkownUrl;
@@ -227,9 +264,9 @@ public final class AgentWeb {
 	}
 
 
-	public JsAccessEntrace getJsAccessEntrace() {
+	public JavaCallJs getJsAccessEntrace() {
 
-		JsAccessEntrace mJsAccessEntrace = this.mJsAccessEntrace;
+		JavaCallJs mJsAccessEntrace = this.mJsAccessEntrace;
 		if (mJsAccessEntrace == null) {
 			this.mJsAccessEntrace = mJsAccessEntrace = JsAccessEntraceImpl.getInstance(mWebCreator.getWebView());
 		}
@@ -433,7 +470,7 @@ public final class AgentWeb {
 		AgentWebConfig.initCookiesManager(mActivity.getApplicationContext());
 		IAgentWebSettings mAgentWebSettings = this.mAgentWebSettings;
 		if (mAgentWebSettings == null) {
-			this.mAgentWebSettings = mAgentWebSettings = AgentWebSettingsImpl.getInstance();
+			this.mAgentWebSettings = mAgentWebSettings = DefaultAgentWebSettings.getInstance();
 		}
 
 		if (mAgentWebSettings instanceof AbsAgentWebSettings) {
@@ -512,7 +549,6 @@ public final class AgentWeb {
 		private int mIndicatorColor = -1;
 		private IAgentWebSettings mAgentWebSettings;
 		private WebCreator mWebCreator;
-		private HttpHeaders mHttpHeaders = null;
 		private IEventHandler mIEventHandler;
 		private int mHeight = -1;
 		private ArrayMap<String, Object> mJavaObject;
@@ -564,7 +600,7 @@ public final class AgentWeb {
 			if (mTag == AgentWeb.FRAGMENT_TAG && this.mViewGroup == null) {
 				throw new NullPointerException("ViewGroup is null,Please check your parameters .");
 			}
-			return new PreAgentWeb(HookManager.hookAgentWeb(new AgentWeb(this), this));
+			return new PreAgentWeb(new AgentWeb(this));
 		}
 
 		private void addJavaObject(String key, Object o) {
@@ -574,14 +610,6 @@ public final class AgentWeb {
 			mJavaObject.put(key, o);
 		}
 
-		private void addHeader(String k, String v) {
-
-			if (mHttpHeaders == null) {
-				mHttpHeaders = HttpHeaders.create();
-			}
-			mHttpHeaders.additionalHttpHeader(k, v);
-
-		}
 	}
 
 	public static class IndicatorBuilder {
@@ -727,11 +755,7 @@ public final class AgentWeb {
 			return this;
 		}
 
-		public CommonBuilder additionalHttpHeader(String k, String v) {
-			this.mAgentBuilder.addHeader(k, v);
 
-			return this;
-		}
 
 		public CommonBuilder setPermissionInterceptor(@Nullable PermissionInterceptor permissionInterceptor) {
 			this.mAgentBuilder.mPermissionInterceptor = permissionInterceptor;

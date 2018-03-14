@@ -31,16 +31,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.just.agentweb.AbsAgentWebSettings;
+import com.just.agentweb.web.AbsAgentWebSettings;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.AgentWebConfig;
-import com.just.agentweb.DefaultWebClient;
-import com.just.agentweb.IAgentWebSettings;
+import com.just.agentweb.web.DefaultWebClient;
+import com.just.agentweb.web.dao.IAgentWebSettings;
 import com.just.agentweb.LogUtils;
-import com.just.agentweb.MiddlewareWebChromeBase;
-import com.just.agentweb.MiddlewareWebClientBase;
-import com.just.agentweb.PermissionInterceptor;
-import com.just.agentweb.WebListenerManager;
+import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
+import com.just.agentweb.wrapper.MiddlewareWebClientBase;
+import com.just.agentweb.security.PermissionInterceptor;
+import com.just.agentweb.web.dao.WebListenerManager;
 import com.just.agentweb.download.AgentWebDownloader;
 import com.just.agentweb.download.DefaultDownloadImpl;
 import com.just.agentweb.download.DownloadListenerAdapter;
@@ -265,7 +265,7 @@ public class AgentWebFragment extends Fragment implements FragmentKeyDown {
 			 * AgentWeb 4.0.0 内部删除了 DownloadListener 监听 ，以及相关API ，将 Download 部分完全抽离出来独立一个库，
 			 * 如果你需要使用 AgentWeb Download 部分 ， 请依赖上 compile 'com.just.agentweb:download:4.0.0 ，
 			 * 如果你需要监听下载结果，请自定义 AgentWebSetting ， New 出 DefaultDownloadImpl，传入DownloadListenerAdapter
-			 * 实现进度或者结果监听，例如下面这个例子，如果你不需要监听进度，或者下载结果，下面 setDownloader 的例子可以忽略。
+			 * 实现进度或者结果监听，例如下面这个例子，如果你不需要监听进度，或者下载结果，下面 setDownloader 的例子可以忽略。ccj659
 			 * @param webView
 			 * @param downloadListener
 			 * @return WebListenerManager

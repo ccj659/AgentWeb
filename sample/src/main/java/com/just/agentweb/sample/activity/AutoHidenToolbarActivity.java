@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.NestedScrollAgentWebView;
+import com.just.agentweb.view.NestedScrollAgentWebView;
 import com.just.agentweb.sample.R;
 
 public class AutoHidenToolbarActivity extends AppCompatActivity implements View.OnClickListener {

@@ -2,7 +2,7 @@ package com.just.agentweb.sample.fragment;
 
 import android.os.Bundle;
 
-import com.just.agentweb.IAgentWebSettings;
+import com.just.agentweb.web.dao.IAgentWebSettings;
 import com.just.agentweb.sample.common.CustomSettings;
 
 /**

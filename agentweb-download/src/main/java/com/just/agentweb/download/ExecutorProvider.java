@@ -1,6 +1,6 @@
 package com.just.agentweb.download;
 
-import com.just.agentweb.Provider;
+import com.just.agentweb.provider.Provider;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;

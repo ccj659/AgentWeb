@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.just.agentweb.BaseIndicatorView;
+import com.just.agentweb.view.indicator.BaseIndicatorView;
 
 /**
  * Created by cenxiaozhong on 2017/5/26.

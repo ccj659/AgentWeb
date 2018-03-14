@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AgentWeb.iml" filepath="$PROJECT_DIR$/AgentWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MyAgentWebCore.iml" filepath="$PROJECT_DIR$/.idea/MyAgentWebCore.iml" />
       <module fileurl="file://$PROJECT_DIR$/agentweb-core/agentweb.iml" filepath="$PROJECT_DIR$/agentweb-core/agentweb.iml" />
       <module fileurl="file://$PROJECT_DIR$/agentweb-core/agentweb-core.iml" filepath="$PROJECT_DIR$/agentweb-core/agentweb-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/agentweb-download/agentweb-download.iml" filepath="$PROJECT_DIR$/agentweb-download/agentweb-download.iml" />

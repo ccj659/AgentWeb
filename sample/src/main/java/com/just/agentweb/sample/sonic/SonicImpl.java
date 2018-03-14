@@ -3,7 +3,7 @@ package com.just.agentweb.sample.sonic;
 import android.content.Context;
 
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.MiddlewareWebClientBase;
+import com.just.agentweb.wrapper.MiddlewareWebClientBase;
 import com.tencent.sonic.sdk.SonicConfig;
 import com.tencent.sonic.sdk.SonicEngine;
 import com.tencent.sonic.sdk.SonicSession;

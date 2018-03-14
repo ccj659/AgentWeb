@@ -49,7 +49,7 @@ public class AgentWebConfig {
 	/**
 	 * 当前操作系统是否低于 KITKAT
 	 */
-	static final boolean IS_KITKAT_OR_BELOW_KITKAT = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
+	public static final boolean IS_KITKAT_OR_BELOW_KITKAT = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
 	/**
 	 * 默认 WebView  类型 。
 	 */
@@ -62,7 +62,7 @@ public class AgentWebConfig {
 	 * 自定义 WebView
 	 */
 	public static final int WEBVIEW_CUSTOM_TYPE = 3;
-	static int WEBVIEW_TYPE = WEBVIEW_DEFAULT_TYPE;
+	public static int WEBVIEW_TYPE = WEBVIEW_DEFAULT_TYPE;
 	private static volatile boolean IS_INITIALIZED = false;
 	private static final String TAG = AgentWebConfig.class.getSimpleName();
 	/**

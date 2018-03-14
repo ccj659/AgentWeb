@@ -27,7 +27,7 @@ import android.widget.FrameLayout;
 
 import com.coolindicator.sdk.CoolIndicator;
 import com.just.agentweb.AgentWebUtils;
-import com.just.agentweb.BaseIndicatorView;
+import com.just.agentweb.view.indicator.BaseIndicatorView;
 
 /**
  * @author cenxiaozhong

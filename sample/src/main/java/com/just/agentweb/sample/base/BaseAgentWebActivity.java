@@ -16,14 +16,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.AgentWebSettingsImpl;
-import com.just.agentweb.AgentWebUIControllerImplBase;
-import com.just.agentweb.DefaultWebClient;
-import com.just.agentweb.IAgentWebSettings;
-import com.just.agentweb.IWebLayout;
-import com.just.agentweb.MiddlewareWebChromeBase;
-import com.just.agentweb.MiddlewareWebClientBase;
-import com.just.agentweb.PermissionInterceptor;
+import com.just.agentweb.web.DefaultAgentWebSettings;
+import com.just.agentweb.web.AgentWebUIControllerImplBase;
+import com.just.agentweb.web.DefaultWebClient;
+import com.just.agentweb.web.dao.IAgentWebSettings;
+import com.just.agentweb.view.webparent.IWebLayout;
+import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
+import com.just.agentweb.wrapper.MiddlewareWebClientBase;
+import com.just.agentweb.security.PermissionInterceptor;
 
 /**
  * Created by cenxiaozhong on 2017/7/22.
@@ -174,7 +174,7 @@ public abstract class BaseAgentWebActivity extends AppCompatActivity {
 
     public @Nullable
     IAgentWebSettings getAgentWebSettings() {
-        return AgentWebSettingsImpl.getInstance();
+        return DefaultAgentWebSettings.getInstance();
     }
 
     protected abstract @NonNull

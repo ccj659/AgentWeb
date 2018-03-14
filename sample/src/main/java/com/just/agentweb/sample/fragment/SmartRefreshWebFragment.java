@@ -7,7 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
-import com.just.agentweb.IWebLayout;
+import com.just.agentweb.view.webparent.IWebLayout;
 import com.just.agentweb.sample.widget.SmartRefreshWebLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

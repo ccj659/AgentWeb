@@ -4,7 +4,7 @@ import android.util.Log;
 import android.webkit.JsResult;
 import android.webkit.WebView;
 
-import com.just.agentweb.MiddlewareWebChromeBase;
+import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
 
 /**
  * Created by cenxiaozhong on 2017/12/16.

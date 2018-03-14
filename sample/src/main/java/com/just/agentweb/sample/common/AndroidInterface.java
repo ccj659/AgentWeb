@@ -28,7 +28,7 @@ public class AndroidInterface {
 
 
     @JavascriptInterface
-    public void callAndroid(final String msg) {
+    public void callAndroid(final String type,final String json) {
 
 
         deliver.post(new Runnable() {
@@ -36,7 +36,7 @@ public class AndroidInterface {
             public void run() {
 
                 Log.i("Info", "main Thread:" + Thread.currentThread());
-                Toast.makeText(context.getApplicationContext(), "" + msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(context.getApplicationContext(), "type:" + type+",json:"+json, Toast.LENGTH_LONG).show();
             }
         });
 

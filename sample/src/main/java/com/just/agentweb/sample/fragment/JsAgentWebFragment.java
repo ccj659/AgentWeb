@@ -57,6 +57,7 @@ public class JsAgentWebFragment extends AgentWebFragment {
         view.findViewById(R.id.callJsMoreParamsButton).setOnClickListener(mOnClickListener);
         view.findViewById(R.id.jsJavaCommunicationButton).setOnClickListener(mOnClickListener);
 
+        view.findViewById(R.id.jscaljava).setOnClickListener(mOnClickListener);
 
 
     }
@@ -87,6 +88,10 @@ public class JsAgentWebFragment extends AgentWebFragment {
 
                     break;
                 case R.id.jsJavaCommunicationButton:
+                    mAgentWeb.getJsAccessEntrace().quickCallJs("callByAndroidInteraction","你好Js");
+                    break;
+
+                case R.id.jscaljava:
                     mAgentWeb.getJsAccessEntrace().quickCallJs("callByAndroidInteraction","你好Js");
                     break;
             }

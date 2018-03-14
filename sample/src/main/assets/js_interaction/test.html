@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type"    content="text/html;charset=gb2312">
+
+
+</head>
+<body>
+
+<br>
+<br>
+<h1 >ZDMRouter  Demo</h1>
+<br>
+<br>
+
+<!--调用方法二:当没有设置chrome handler时,可采用window.addJavascriptInterface别名.方法名 js调用android native 方法
+    (此处的test,请看java文件中JavascriptInterface的别名)-->
+<input id="login" type="button"  value="跳转到原生登录 call_js_android('user','login')"  onclick=" window.smzdmwebaction.call_js_android('user','login')" /> <br><br>
+
+
+<input id="coupon" type="button" value="跳转到web优惠券 call_js_android('coupon','home')"  onclick=" window.smzdmwebaction.call_js_android('coupon','home')" /> <br><br>
+
+
+<input id="money" type="button" value="跳转到web个人资产 call_js_android('user','money')"  onclick=" window.smzdmwebaction.call_js_android('user','money')" /> <br><br>
+
+
+<input id="url" type="button" value="url请求RedirectData,跳转到好价栏目 call_js_android('url','lanmu')"  onclick=" window.smzdmwebaction.call_js_android('url','lanmu')" /> <br><br>
+
+</body>
+</html>
