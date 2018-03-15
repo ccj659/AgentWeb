@@ -438,7 +438,11 @@ public class DefaultWebClient extends MiddlewareWebClientBase {
 		return false;
 	}
 
-
+	/**
+	 * 跳转到 系统 电话,短信,邮件,地图
+	 * @param url
+	 * @return
+	 */
 	private boolean handleCommonLink(String url) {
 		if (url.startsWith(WebView.SCHEME_TEL)
 				|| url.startsWith(SCHEME_SMS)

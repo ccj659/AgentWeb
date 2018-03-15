@@ -38,6 +38,11 @@ public abstract class JsBaseInterfaceHolder implements JsInterfaceHolder {
         this.mSecurityType = securityType;
     }
 
+    /**
+     * 判断是否有JavascriptInterface 注解,避免被注入攻击
+     * @param v
+     * @return
+     */
     @Override
     public boolean checkObject(Object v) {
         //// 因为该方法在 Android 4.4 版本才可使用，所以使用时需进行版本判断
