@@ -52,10 +52,9 @@ import com.just.agentweb.view.indicator.IndicatorController;
 import com.just.agentweb.view.indicator.IndicatorHandler;
 import com.just.agentweb.view.webparent.IWebLayout;
 import com.just.agentweb.view.webparent.WebParentLayout;
-import com.just.agentweb.web.AbsAgentWebSettings;
-import com.just.agentweb.web.AbsAgentWebUIController;
-import com.just.agentweb.web.AgentWebUIControllerImplBase;
-import com.just.agentweb.web.DefaultAgentWebSettings;
+import com.just.agentweb.web.WebSettingsDao;
+import com.just.agentweb.web.controller.UIControllerDao;
+import com.just.agentweb.web.DefaultWebSettings;
 import com.just.agentweb.web.DefaultChromeClient;
 import com.just.agentweb.web.DefaultUrlLoader;
 import com.just.agentweb.web.DefaultWebClient;
@@ -217,8 +216,8 @@ public final class AgentWeb {
 		this.mViewGroup = agentBuilder.mViewGroup;
 		this.mIEventHandler = agentBuilder.mIEventHandler;
 		this.mEnableIndicator = agentBuilder.mEnableIndicator;
-		mWebCreator = agentBuilder.mWebCreator == null ? configWebCreator(agentBuilder.mBaseIndicatorView, agentBuilder.mIndex, agentBuilder.mLayoutParams, agentBuilder.mIndicatorColor, agentBuilder.mHeight, agentBuilder.mWebView, agentBuilder.mWebLayout) : agentBuilder.mWebCreator;
-		mIndicatorController = agentBuilder.mIndicatorController;
+		this.mWebCreator = agentBuilder.mWebCreator == null ? configWebCreator(agentBuilder.mBaseIndicatorView, agentBuilder.mIndex, agentBuilder.mLayoutParams, agentBuilder.mIndicatorColor, agentBuilder.mHeight, agentBuilder.mWebView, agentBuilder.mWebLayout) : agentBuilder.mWebCreator;
+		this.mIndicatorController = agentBuilder.mIndicatorController;
 		this.mWebChromeClient = agentBuilder.mWebChromeClient;
 		this.mWebViewClient = agentBuilder.mWebViewClient;
 		mAgentWeb = this;
@@ -232,14 +231,16 @@ public final class AgentWeb {
 		this.mPermissionInterceptor = agentBuilder.mPermissionInterceptor == null ? null : new PermissionInterceptorWrapper(agentBuilder.mPermissionInterceptor);
 		this.mSecurityType = agentBuilder.mSecurityType;
 		this.mIUrlLoader = new DefaultUrlLoader(mWebCreator.create().getWebView());
+
 		if (this.mWebCreator.getWebParentLayout() instanceof WebParentLayout) {
 			WebParentLayout mWebParentLayout = (WebParentLayout) this.mWebCreator.getWebParentLayout();
-			mWebParentLayout.bindController(agentBuilder.mAgentWebUIController == null ? AgentWebUIControllerImplBase.build() : agentBuilder.mAgentWebUIController);
+			mWebParentLayout.bindController(agentBuilder.mAgentWebUIController == null ? UIControllerDao.create() : agentBuilder.mAgentWebUIController);
 			mWebParentLayout.setErrorLayoutRes(agentBuilder.mErrorLayout, agentBuilder.mReloadId);
 			mWebParentLayout.setErrorView(agentBuilder.mErrorView);
 		}
+
 		this.mWebLifeCycle = new DefaultWebLifeCycle(mWebCreator.getWebView());
-		mWebSecurityController = new WebSecurityControllerImpl(mWebCreator.getWebView(), this.mAgentWeb.mJavaObjects, this.mSecurityType);
+		this.mWebSecurityController = new WebSecurityControllerImpl(mWebCreator.getWebView(), this.mAgentWeb.mJavaObjects, this.mSecurityType);
 		this.mWebClientHelper = agentBuilder.mWebClientHelper;
 		this.mIsInterceptUnkownUrl = agentBuilder.mIsInterceptUnkownUrl;
 		if (agentBuilder.mOpenOtherPage != null) {
@@ -435,7 +436,7 @@ public final class AgentWeb {
 
 	private WebViewClient getWebViewClient() {
 
-		LogUtils.i(TAG, "getDelegate:" + this.mMiddleWrareWebClientBaseHeader);
+		LogUtils.i(TAG, "getUIControllerImp:" + this.mMiddleWrareWebClientBaseHeader);
 		DefaultWebClient mDefaultWebClient = DefaultWebClient
 				.createBuilder()
 				.setActivity(this.mActivity)
@@ -470,13 +471,13 @@ public final class AgentWeb {
 		AgentWebConfig.initCookiesManager(mActivity.getApplicationContext());
 		IAgentWebSettings mAgentWebSettings = this.mAgentWebSettings;
 		if (mAgentWebSettings == null) {
-			this.mAgentWebSettings = mAgentWebSettings = DefaultAgentWebSettings.getInstance();
+			this.mAgentWebSettings = mAgentWebSettings = DefaultWebSettings.getInstance();
 		}
 
-		if (mAgentWebSettings instanceof AbsAgentWebSettings) {
-			((AbsAgentWebSettings) mAgentWebSettings).bindAgentWeb(this);
+		if (mAgentWebSettings instanceof WebSettingsDao) {
+			((WebSettingsDao) mAgentWebSettings).bindAgentWeb(this);
 		}
-		if (mWebListenerManager == null && mAgentWebSettings instanceof AbsAgentWebSettings) {
+		if (mWebListenerManager == null && mAgentWebSettings instanceof WebSettingsDao) {
 			mWebListenerManager = (WebListenerManager) mAgentWebSettings;
 		}
 		mAgentWebSettings.toSetting(mWebCreator.getWebView());
@@ -557,7 +558,7 @@ public final class AgentWeb {
 		private boolean mWebClientHelper = true;
 		private IWebLayout mWebLayout = null;
 		private PermissionInterceptor mPermissionInterceptor = null;
-		private AbsAgentWebUIController mAgentWebUIController;
+		private UIControllerDao mAgentWebUIController;
 		private DefaultWebClient.OpenOtherPageWays mOpenOtherPage = null;
 		private boolean mIsInterceptUnkownUrl = false;
 		private MiddlewareWebClientBase mMiddlewareWebClientBaseHeader;
@@ -762,7 +763,7 @@ public final class AgentWeb {
 			return this;
 		}
 
-		public CommonBuilder setAgentWebUIController(@Nullable AgentWebUIControllerImplBase agentWebUIController) {
+		public CommonBuilder setAgentWebUIController(@Nullable UIControllerDao agentWebUIController) {
 			this.mAgentBuilder.mAgentWebUIController = agentWebUIController;
 			return this;
 		}

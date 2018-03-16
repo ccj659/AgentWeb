@@ -16,9 +16,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.web.DefaultAgentWebSettings;
-import com.just.agentweb.web.AgentWebUIControllerImplBase;
+import com.just.agentweb.web.DefaultWebSettings;
 import com.just.agentweb.web.DefaultWebClient;
+import com.just.agentweb.web.controller.UIControllerDao;
 import com.just.agentweb.web.dao.IAgentWebSettings;
 import com.just.agentweb.view.webparent.IWebLayout;
 import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
@@ -34,7 +34,7 @@ import com.just.agentweb.security.PermissionInterceptor;
 public abstract class BaseAgentWebActivity extends AppCompatActivity {
 
     protected AgentWeb mAgentWeb;
-    private AgentWebUIControllerImplBase mAgentWebUIController;
+    private UIControllerDao mAgentWebUIController;
     private ErrorLayoutEntity mErrorLayoutEntity;
     private MiddlewareWebChromeBase mMiddleWareWebChrome;
     private MiddlewareWebClientBase mMiddleWareWebClient;
@@ -174,7 +174,7 @@ public abstract class BaseAgentWebActivity extends AppCompatActivity {
 
     public @Nullable
     IAgentWebSettings getAgentWebSettings() {
-        return DefaultAgentWebSettings.getInstance();
+        return DefaultWebSettings.getInstance();
     }
 
     protected abstract @NonNull
@@ -216,7 +216,7 @@ public abstract class BaseAgentWebActivity extends AppCompatActivity {
     }
 
     public @Nullable
-    AgentWebUIControllerImplBase getAgentWebUIController() {
+    UIControllerDao getAgentWebUIController() {
         return null;
     }
 

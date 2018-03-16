@@ -43,6 +43,7 @@ public class WebSecurityLogicImpl implements WebSecurityCheckLogic {
         if (Build.VERSION_CODES.HONEYCOMB > Build.VERSION.SDK_INT || Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1){
             return;
         }
+        // 修补漏洞 android webview组件包含3个隐藏的系统JS接口:searchBoxJavaBridge_, accessibilityTraversal以及 accessibility,恶意程序可以利用它们实现远程代码执行。
         view.removeJavascriptInterface("searchBoxJavaBridge_");
         view.removeJavascriptInterface("accessibility");
         view.removeJavascriptInterface("accessibilityTraversal");

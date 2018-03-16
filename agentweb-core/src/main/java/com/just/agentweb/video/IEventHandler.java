@@ -19,8 +19,6 @@ package com.just.agentweb.video;
 import android.view.KeyEvent;
 
 /**
- * @author cenxiaozhong
- * @since 1.0.0
  */
 public interface IEventHandler {
 

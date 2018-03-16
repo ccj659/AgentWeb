@@ -23,15 +23,19 @@ import com.just.agentweb.AgentWebUtils;
 import com.just.agentweb.web.dao.WebLifeCycle;
 
 /**
- * @author cenxiaozhong
- * @date 2017/6/3
- * @since 2.0.0
  */
 public class DefaultWebLifeCycle implements WebLifeCycle {
     private WebView mWebView;
 
     public DefaultWebLifeCycle(WebView webView) {
         this.mWebView = webView;
+    }
+
+    @Override
+    public void onStart() {
+        if(this.mWebView!=null){
+          //  this.mWebView.on();
+        }
     }
 
     @Override

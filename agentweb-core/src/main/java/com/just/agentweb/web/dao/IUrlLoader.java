@@ -17,10 +17,6 @@
 package com.just.agentweb.web.dao;
 
 /**
- * @author cenxiaozhong
- * @date 2017/6/3
- * @update 4.0.0
- * @since 2.0.0
  */
 public interface IUrlLoader {
 

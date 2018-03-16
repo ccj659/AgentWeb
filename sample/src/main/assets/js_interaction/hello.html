@@ -67,11 +67,15 @@
 
 
     </script>
+    <title content="ZDMWeb JsBridge content" title="ZDMWeb JsBridge" ></title>
 </head>
 <body style="width: 100%;height: 100%;padding: 0px">
 
-<input id="id_call_java" type="button"  value="跳转到原生登录 call_js_android('user','login')"  onclick=" window.android.callAndroid('user','login')" /> <br><br>
+<input id="js_call_android" type="button"  value="js_call_android('user','js_call_android_back')"  onclick=" window.android.callAndroid('user','login')" /> <br><br>
 
+<input id="js_call_android_back" type="button"  value="js_call_android_back('user','js_call_android_back')"  onclick=" window.android.callAndroid('user','login')" /> <br><br>
+
+<input id="android_call_js" type="button"  value="android_call_js('user','js_call_android_back')"  onclick=" window.android.callAndroid('user','login')" /> <br><br>
 
 
 <div id="div_box"

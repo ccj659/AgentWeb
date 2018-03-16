@@ -31,18 +31,17 @@ import android.view.ViewStub;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
-import com.just.agentweb.web.AbsAgentWebUIController;
+import com.just.agentweb.web.controller.UIControllerDao;
 import com.just.agentweb.LogUtils;
 import com.just.agentweb.provider.Provider;
 import com.just.agentweb.R;
 
 /**
- * @author cenxiaozhong
- * @date 2017/12/8
- * @since 3.0.0
+	webview 父布局, 可以做loading条,错误界面,空界面等等
+
  */
-public class WebParentLayout extends FrameLayout implements Provider<AbsAgentWebUIController> {
-	private AbsAgentWebUIController mAgentWebUIController = null;
+public class WebParentLayout extends FrameLayout implements Provider<UIControllerDao> {
+	private UIControllerDao mAgentWebUIController = null;
 	private static final String TAG = WebParentLayout.class.getSimpleName();
 	@LayoutRes
 	private int mErrorLayoutRes;
@@ -69,7 +68,7 @@ public class WebParentLayout extends FrameLayout implements Provider<AbsAgentWeb
 		this.mErrorLayoutRes = R.layout.agentweb_error_page;
 	}
 
-	public void bindController(AbsAgentWebUIController agentWebUIController) {
+	public void bindController(UIControllerDao agentWebUIController) {
 		this.mAgentWebUIController = agentWebUIController;
 		this.mAgentWebUIController.bindWebParent(this, (Activity) getContext());
 	}
@@ -172,7 +171,7 @@ public class WebParentLayout extends FrameLayout implements Provider<AbsAgentWeb
 	}
 
 	@Override
-	public AbsAgentWebUIController provide() {
+	public UIControllerDao provide() {
 		return this.mAgentWebUIController;
 	}
 

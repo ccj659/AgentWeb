@@ -21,9 +21,6 @@ import android.webkit.WebChromeClient;
 
 
 /**
- * @author cenxiaozhong
- * @date 2017/6/10
- * @since 2.0.0
  */
 public interface IVideo {
 

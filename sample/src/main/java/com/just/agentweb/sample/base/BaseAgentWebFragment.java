@@ -14,14 +14,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.web.DefaultAgentWebSettings;
-import com.just.agentweb.web.AgentWebUIControllerImplBase;
-import com.just.agentweb.web.DefaultWebClient;
-import com.just.agentweb.web.dao.IAgentWebSettings;
+import com.just.agentweb.security.PermissionInterceptor;
 import com.just.agentweb.view.webparent.IWebLayout;
+import com.just.agentweb.web.DefaultWebClient;
+import com.just.agentweb.web.DefaultWebSettings;
+import com.just.agentweb.web.controller.UIControllerDao;
+import com.just.agentweb.web.dao.IAgentWebSettings;
 import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
 import com.just.agentweb.wrapper.MiddlewareWebClientBase;
-import com.just.agentweb.security.PermissionInterceptor;
 
 /**
  * Created by cenxiaozhong on 2017/7/22.
@@ -34,7 +34,7 @@ public abstract class BaseAgentWebFragment extends Fragment {
     private MiddlewareWebChromeBase mMiddleWareWebChrome;
     private MiddlewareWebClientBase mMiddleWareWebClient;
     private ErrorLayoutEntity mErrorLayoutEntity;
-    private AgentWebUIControllerImplBase mAgentWebUIController;
+    private UIControllerDao mAgentWebUIController;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public abstract class BaseAgentWebFragment extends Fragment {
     }
 
     protected @Nullable
-    AgentWebUIControllerImplBase getAgentWebUIController() {
+    UIControllerDao getAgentWebUIController() {
         return mAgentWebUIController;
     }
 
@@ -141,7 +141,7 @@ public abstract class BaseAgentWebFragment extends Fragment {
 
     protected @Nullable
     IAgentWebSettings getAgentWebSettings() {
-        return DefaultAgentWebSettings.getInstance();
+        return DefaultWebSettings.getInstance();
     }
 
     protected @Nullable

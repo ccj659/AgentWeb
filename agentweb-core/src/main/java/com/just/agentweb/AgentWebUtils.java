@@ -56,7 +56,7 @@ import android.widget.Toast;
 
 import com.just.agentweb.security.PermissionInterceptor;
 import com.just.agentweb.view.webparent.WebParentLayout;
-import com.just.agentweb.web.AbsAgentWebUIController;
+import com.just.agentweb.web.controller.UIControllerDao;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -734,7 +734,7 @@ public class AgentWebUtils {
 			return;
 		}
 		WebParentLayout mWebParentLayout = (WebParentLayout) activity.findViewById(R.id.web_parent_layout_id);
-		AbsAgentWebUIController mAgentWebUIController = mWebParentLayout.provide();
+		UIControllerDao mAgentWebUIController = mWebParentLayout.provide();
 		if (mAgentWebUIController != null) {
 			mAgentWebUIController.onShowMessage(message, from);
 		}
@@ -784,7 +784,7 @@ public class AgentWebUtils {
 	}
 
 
-	public static AbsAgentWebUIController getAgentWebUIControllerByWebView(WebView webView) {
+	public static UIControllerDao getAgentWebUIControllerByWebView(WebView webView) {
 		WebParentLayout mWebParentLayout = getWebParentLayoutByWebView(webView);
 		return mWebParentLayout.provide();
 	}
@@ -810,7 +810,7 @@ public class AgentWebUtils {
 			throw new IllegalStateException("please check webcreator's create method was be called ?");
 		}
 		mViewGroup = (ViewGroup) webView.getParent();
-		AbsAgentWebUIController mAgentWebUIController;
+		UIControllerDao mAgentWebUIController;
 		while (mViewGroup != null) {
 
 			LogUtils.i(TAG, "ViewGroup:" + mViewGroup);

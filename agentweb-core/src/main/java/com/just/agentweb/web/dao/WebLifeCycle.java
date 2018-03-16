@@ -23,7 +23,7 @@ package com.just.agentweb.web.dao;
  */
 public interface WebLifeCycle {
 
-
+    void onStart();
     void onResume();
     void onPause();
     void onDestroy();

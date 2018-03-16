@@ -43,6 +43,7 @@ import com.just.agentweb.security.AgentWebPermissions;
 import com.just.agentweb.security.PermissionInterceptor;
 import com.just.agentweb.video.IVideo;
 import com.just.agentweb.view.indicator.IndicatorController;
+import com.just.agentweb.web.controller.UIControllerDao;
 import com.just.agentweb.wrapper.MiddlewareWebChromeBase;
 
 import java.lang.ref.WeakReference;
@@ -107,9 +108,9 @@ public class DefaultChromeClient extends MiddlewareWebChromeBase {
 	 */
 	public static final int FROM_CODE_INTENTION_LOCATION = FROM_CODE_INTENTION << 2;
 	/**
-	 * AbsAgentWebUIController
+	 * UIControllerDao
 	 */
-	private WeakReference<AbsAgentWebUIController> mAgentWebUIController = null;
+	private WeakReference<UIControllerDao> mAgentWebUIController = null;
 	/**
 	 * IndicatorController 进度条控制器
 	 */
@@ -126,13 +127,13 @@ public class DefaultChromeClient extends MiddlewareWebChromeBase {
 							   PermissionInterceptor permissionInterceptor, WebView webView) {
 		super(chromeClient);
 		this.mIndicatorController = indicatorController;
-		mIsWrapper = chromeClient != null ? true : false;
+		mIsWrapper = chromeClient != null;
 		this.mWebChromeClient = chromeClient;
 		mActivityWeakReference = new WeakReference<Activity>(activity);
 		this.mIVideo = iVideo;
 		this.mPermissionInterceptor = permissionInterceptor;
 		this.mWebView = webView;
-		mAgentWebUIController = new WeakReference<AbsAgentWebUIController>(AgentWebUtils.getAgentWebUIControllerByWebView(webView));
+		mAgentWebUIController = new WeakReference<UIControllerDao>(AgentWebUtils.getAgentWebUIControllerByWebView(webView));
 	}
 
 

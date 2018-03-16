@@ -29,7 +29,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
-import com.just.agentweb.web.AbsAgentWebUIController;
+import com.just.agentweb.web.controller.UIControllerDao;
 import com.just.agentweb.provider.Action;
 import com.just.agentweb.provider.ActionActivity;
 import com.just.agentweb.security.AgentWebPermissions;
@@ -96,9 +96,9 @@ public class DefaultDownloadImpl implements android.webkit.DownloadListener {
 	 */
 	private String mMimetype;
 	/**
-	 * AbsAgentWebUIController
+	 * UIControllerDao
 	 */
-	private WeakReference<AbsAgentWebUIController> mAgentWebUIController;
+	private WeakReference<UIControllerDao> mAgentWebUIController;
 	/**
 	 * ExtraServiceImpl
 	 */
@@ -135,7 +135,7 @@ public class DefaultDownloadImpl implements android.webkit.DownloadListener {
 		this.mDownloadListener = extraServiceImpl.mDownloadListener;
 		this.mDownloadingListener = extraServiceImpl.mDownloadingListener;
 		this.mPermissionListener = extraServiceImpl.mPermissionInterceptor;
-		this.mAgentWebUIController = new WeakReference<AbsAgentWebUIController>(AgentWebUtils.getAgentWebUIControllerByWebView(extraServiceImpl.mWebView));
+		this.mAgentWebUIController = new WeakReference<UIControllerDao>(AgentWebUtils.getAgentWebUIControllerByWebView(extraServiceImpl.mWebView));
 	}
 
 
@@ -304,7 +304,7 @@ public class DefaultDownloadImpl implements android.webkit.DownloadListener {
 		if (null == (mActivity = mActivityWeakReference.get()) || mActivity.isFinishing()) {
 			return;
 		}
-		AbsAgentWebUIController mAgentWebUIController;
+		UIControllerDao mAgentWebUIController;
 		if (null != (mAgentWebUIController = this.mAgentWebUIController.get())) {
 			mAgentWebUIController.onForceDownloadAlert(mUrl, createCallback(file));
 		}

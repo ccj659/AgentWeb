@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.web.DefaultAgentWebSettings;
+import com.just.agentweb.web.DefaultWebSettings;
 import com.just.agentweb.web.DefaultWebClient;
 import com.just.agentweb.sample.widget.CoolIndicatorLayout;
 
@@ -39,7 +39,7 @@ public class CustomIndicatorFragment extends AgentWebFragment {
 		this.mAgentWeb = AgentWeb.with(this)//
 				.setAgentWebParent((ViewGroup) view, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
 				.setCustomIndicator(mCoolIndicatorLayout)
-				.setAgentWebWebSettings(DefaultAgentWebSettings.getInstance())
+				.setAgentWebWebSettings(DefaultWebSettings.getInstance())
 				.setWebViewClient(mWebViewClient)
 				.setPermissionInterceptor(mPermissionInterceptor)
 				.setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)

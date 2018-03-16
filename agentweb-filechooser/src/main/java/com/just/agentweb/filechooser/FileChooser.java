@@ -33,7 +33,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.just.agentweb.web.AbsAgentWebUIController;
+import com.just.agentweb.web.controller.UIControllerDao;
 import com.just.agentweb.provider.Action;
 import com.just.agentweb.provider.ActionActivity;
 import com.just.agentweb.AgentWebConfig;
@@ -127,9 +127,9 @@ public class FileChooser {
 	 */
 	private int FROM_INTENTION_CODE = 21;
 	/**
-	 * 当前 AbsAgentWebUIController
+	 * 当前 UIControllerDao
 	 */
-	private WeakReference<AbsAgentWebUIController> mAgentWebUIController = null;
+	private WeakReference<UIControllerDao> mAgentWebUIController = null;
 	/**
 	 * 选择文件类型
 	 */
@@ -155,7 +155,7 @@ public class FileChooser {
 		this.mWebView = builder.mWebView;
 		this.mPermissionInterceptor = builder.mPermissionInterceptor;
 		this.mAcceptType = builder.mAcceptType;
-		this.mAgentWebUIController = new WeakReference<AbsAgentWebUIController>(AgentWebUtils.getAgentWebUIControllerByWebView(this.mWebView));
+		this.mAgentWebUIController = new WeakReference<UIControllerDao>(AgentWebUtils.getAgentWebUIControllerByWebView(this.mWebView));
 		this.mJsChannelHandler$Callback = builder.mJsChannelCallback;
 
 	}
@@ -575,9 +575,9 @@ public class FileChooser {
 	private static final class AboveLCallback implements Handler.Callback {
 		private ValueCallback<Uri[]> mValueCallback;
 		private Uri[] mUris;
-		private WeakReference<AbsAgentWebUIController> controller;
+		private WeakReference<UIControllerDao> controller;
 
-		private AboveLCallback(ValueCallback<Uri[]> valueCallbacks, Uri[] uris, WeakReference<AbsAgentWebUIController> controller) {
+		private AboveLCallback(ValueCallback<Uri[]> valueCallbacks, Uri[] uris, WeakReference<UIControllerDao> controller) {
 			this.mValueCallback = valueCallbacks;
 			this.mUris = uris;
 			this.controller = controller;

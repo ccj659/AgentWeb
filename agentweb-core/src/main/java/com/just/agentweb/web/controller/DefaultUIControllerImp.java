@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.just.agentweb.web;
+package com.just.agentweb.web.controller;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -36,11 +36,8 @@ import com.just.agentweb.view.webparent.WebParentLayout;
 
 
 /**
- * @author cenxiaozhong
- * @date 2017/12/8
- * @since 3.0.0
  */
-public class DefaultUIController extends AbsAgentWebUIController {
+public class DefaultUIControllerImp extends UIControllerDao {
 
 	private AlertDialog mAlertDialog;
 	protected AlertDialog mConfirmDialog;

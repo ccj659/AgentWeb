@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.just.agentweb.web;
+package com.just.agentweb.web.controller;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,38 +28,24 @@ import com.just.agentweb.view.webparent.WebParentLayout;
 
 /**
  * 该类统一控制了与用户交互的界面
- *
- * @author cenxiaozhong
- * @since 3.0.0
  */
-public abstract class AbsAgentWebUIController {
+public abstract class UIControllerDao {
 
-	public static boolean HAS_DESIGN_LIB = false;
 	private Activity mActivity;
 	private WebParentLayout mWebParentLayout;
 	private volatile boolean mIsBindWebParent = false;
-	protected AbsAgentWebUIController mAgentWebUIControllerDelegate;
+	protected UIControllerDao mUIControllerDao;
 	protected String TAG = this.getClass().getSimpleName();
 
-	static {
-		try {
-			Class.forName("android.support.design.widget.Snackbar");
-			Class.forName("android.support.design.widget.BottomSheetDialog");
-			HAS_DESIGN_LIB = true;
-		} catch (Throwable ignore) {
-			HAS_DESIGN_LIB = false;
-		}
+
+	public static UIControllerDao create() {
+		return  new DefaultUIControllerImp();
 	}
 
-
-	protected AbsAgentWebUIController create() {
-		return  new DefaultUIController();
-	}
-
-	protected AbsAgentWebUIController getDelegate() {
-		AbsAgentWebUIController mAgentWebUIController = this.mAgentWebUIControllerDelegate;
+	protected UIControllerDao getUIControllerImp() {
+		UIControllerDao mAgentWebUIController = this.mUIControllerDao;
 		if (mAgentWebUIController == null) {
-			this.mAgentWebUIControllerDelegate = mAgentWebUIController = create();
+			this.mUIControllerDao = mAgentWebUIController = create();
 		}
 		return mAgentWebUIController;
 	}

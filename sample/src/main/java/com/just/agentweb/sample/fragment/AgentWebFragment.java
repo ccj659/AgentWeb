@@ -31,7 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.just.agentweb.web.AbsAgentWebSettings;
+import com.just.agentweb.web.WebSettingsDao;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.web.DefaultWebClient;
@@ -253,7 +253,7 @@ public class AgentWebFragment extends Fragment implements FragmentKeyDown {
 	 * @return IAgentWebSettings
 	 */
 	public IAgentWebSettings getSettings() {
-		return new AbsAgentWebSettings() {
+		return new WebSettingsDao() {
 			private AgentWeb mAgentWeb;
 
 			@Override
@@ -376,7 +376,7 @@ public class AgentWebFragment extends Fragment implements FragmentKeyDown {
 
 		}
 		/*错误页回调该方法 ， 如果重写了该方法， 上面传入了布局将不会显示 ， 交由开发者实现，注意参数对齐。*/
-	   /* public void onMainFrameError(AbsAgentWebUIController agentWebUIController, WebView view, int errorCode, String description, String failingUrl) {
+	   /* public void onMainFrameError(UIControllerDao agentWebUIController, WebView view, int errorCode, String description, String failingUrl) {
 
             Log.i(TAG, "AgentWebFragment onMainFrameError");
             agentWebUIController.onMainFrameError(view,errorCode,description,failingUrl);

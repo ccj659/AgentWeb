@@ -33,27 +33,24 @@ import com.just.agentweb.web.dao.IAgentWebSettings;
 import com.just.agentweb.web.dao.WebListenerManager;
 
 /**
- * @author cenxiaozhong
- * @update 4.0.0 ,WebDefaultSettingsManager rename to AbsAgentWebSettings
- * @since 1.0.0
  */
 
-public abstract class AbsAgentWebSettings implements IAgentWebSettings, WebListenerManager {
+public abstract class WebSettingsDao implements IAgentWebSettings, WebListenerManager {
 
 	private WebSettings mWebSettings;
-	private static final String TAG = AbsAgentWebSettings.class.getSimpleName();
+	private static final String TAG = WebSettingsDao.class.getSimpleName();
 	public static final String USERAGENT_UC = " UCBrowser/11.6.4.950 ";
 	public static final String USERAGENT_QQ_BROWSER = " MQQBrowser/8.0 ";
 	public static final String USERAGENT_AGENTWEB = AgentWebConfig.AGENTWEB_VERSION;
 	protected AgentWeb mAgentWeb;
 
 
-	public static AbsAgentWebSettings getInstance() {
-		return new DefaultAgentWebSettings();
+	public static WebSettingsDao getInstance() {
+		return new DefaultWebSettings();
 	}
 
 
-	public AbsAgentWebSettings() {
+	public WebSettingsDao() {
 
 	}
 

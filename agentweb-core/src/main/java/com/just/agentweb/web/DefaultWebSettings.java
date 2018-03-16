@@ -30,7 +30,7 @@ import com.just.agentweb.web.dao.WebListenerManager;
  * @since 1.0.0
  * @author cenxiaozhong
  */
-public class DefaultAgentWebSettings extends AbsAgentWebSettings {
+public class DefaultWebSettings extends WebSettingsDao {
     private AgentWeb mAgentWeb;
 
     @Override

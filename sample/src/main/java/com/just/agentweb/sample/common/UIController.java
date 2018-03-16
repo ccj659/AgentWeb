@@ -2,10 +2,12 @@ package com.just.agentweb.sample.common;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.util.Log;
+import android.webkit.JsPromptResult;
+import android.webkit.JsResult;
 import android.webkit.WebView;
 
-import com.just.agentweb.web.AgentWebUIControllerImplBase;
+import com.just.agentweb.view.webparent.WebParentLayout;
+import com.just.agentweb.web.controller.UIControllerDao;
 
 /**
  * Created by cenxiaozhong on 2017/12/23.
@@ -13,9 +15,9 @@ import com.just.agentweb.web.AgentWebUIControllerImplBase;
 
 /**
  * 如果你需要修改某一个AgentWeb 内部的某一个弹窗 ，请看下面的例子
- * 注意写法一定要参照 DefaultUIController 的写法 ，因为UI自由定制，但是回调的方式是固定的，并且一定要回调。
+ * 注意写法一定要参照 DefaultUIControllerImp 的写法 ，因为UI自由定制，但是回调的方式是固定的，并且一定要回调。
  */
-public class UIController extends AgentWebUIControllerImplBase {
+public class UIController extends UIControllerDao {
 
     private Activity mActivity;
     public UIController(Activity activity){
@@ -23,45 +25,134 @@ public class UIController extends AgentWebUIControllerImplBase {
     }
 
     @Override
-    public void onShowMessage(String message, String from) {
-        super.onShowMessage(message,from);
-        Log.i(TAG,"message:"+message);
+    protected void bindSupportWebParent(WebParentLayout webParentLayout, Activity activity) {
+
+    }
+
+    /**
+     * WebChromeClient#onJsAlert
+     *
+     * @param view
+     * @param url
+     * @param message
+     */
+    @Override
+    public void onJsAlert(WebView view, String url, String message) {
+
+    }
+
+    /**
+     * 咨询用户是否前往其他页面
+     *
+     * @param view
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void onOpenPagePrompt(WebView view, String url, Handler.Callback callback) {
+
+    }
+
+    /**
+     * WebChromeClient#onJsConfirm
+     *
+     * @param view
+     * @param url
+     * @param message
+     * @param jsResult
+     */
+    @Override
+    public void onJsConfirm(WebView view, String url, String message, JsResult jsResult) {
+
     }
 
     @Override
-    public void onSelectItemsPrompt(WebView view, String url, String[] items, Handler.Callback callback) {
-       super.onSelectItemsPrompt(view,url,items,callback); // 使用默认的UI
+    public void onSelectItemsPrompt(WebView view, String url, String[] ways, Handler.Callback callback) {
+
     }
 
+    /**
+     * 强制下载弹窗
+     *
+     * @param url      当前下载地址。
+     * @param callback 用户操作回调回调
+     */
+    @Override
+    public void onForceDownloadAlert(String url, Handler.Callback callback) {
+
+    }
 
     /**
-     * 修改文件选择的弹窗
+     * WebChromeClient#onJsPrompt
+     *
+     * @param view
+     * @param url
+     * @param message
+     * @param defaultValue
+     * @param jsPromptResult
      */
-   /* @Override
-    public void onSelectItemsPrompt(WebView view, String mUrl, String[] ways, final Handler.Callback callback) {
-        //super.onSelectItemsPrompt(view,mUrl,ways,callback); //这行应该注释或者删除掉
-        final AlertDialog mAlertDialog = new AlertDialog.Extra(mActivity)//
-                .setSingleChoiceItems(ways, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        if (callback != null) {
-                            Message mMessage = Message.obtain();
-                            mMessage.what = which;  //mMessage.what 必须等于ways的index
-                            callback.handleMessage(mMessage); //最后callback一定要回调
-                        }
+    @Override
+    public void onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult jsPromptResult) {
 
-                    }
-                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialog.dismiss();
-                        if (callback != null) {
-                            callback.handleMessage(Message.obtain(null, -1)); //-1表示取消  //最后callback一定要回调
-                        }
-                    }
-                }).create();
-        mAlertDialog.show();
+    }
 
-    }*/
+    /**
+     * 显示错误页
+     *
+     * @param view
+     * @param errorCode
+     * @param description
+     * @param failingUrl
+     */
+    @Override
+    public void onMainFrameError(WebView view, int errorCode, String description, String failingUrl) {
+
+    }
+
+    /**
+     * 隐藏错误页
+     */
+    @Override
+    public void onShowMainFrame() {
+
+    }
+
+    /**
+     * 弹窗正在加载...
+     *
+     * @param msg
+     */
+    @Override
+    public void onLoading(String msg) {
+
+    }
+
+    /**
+     * 正在加载弹窗取消
+     */
+    @Override
+    public void onCancelLoading() {
+
+    }
+
+    /**
+     * @param message 消息
+     * @param intent  说明message的来源，意图
+     */
+    @Override
+    public void onShowMessage(String message, String intent) {
+
+    }
+
+    /**
+     * 当权限被拒回调该方法
+     *
+     * @param permissions
+     * @param permissionType
+     * @param action
+     */
+    @Override
+    public void onPermissionsDeny(String[] permissions, String permissionType, String action) {
+
+    }
 }

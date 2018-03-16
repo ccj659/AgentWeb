@@ -33,7 +33,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author cenxiaozhong
  */
 public class VideoImpl implements IVideo, EventInterceptor {
 
